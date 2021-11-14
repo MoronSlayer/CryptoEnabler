@@ -11,6 +11,11 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'display-assets',
+    loadChildren: () => import('./display-assets/display-assets.module').then( m => m.DisplayAssetsPageModule)
+  },
+
 ];
 
 @NgModule({
