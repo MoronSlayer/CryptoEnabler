@@ -1,14 +1,17 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color= "tertiary">
     <ion-title>
-
+      Crypto Enabler
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div id="container">
-    <ion-searchbar showCancelButton="never"></ion-searchbar>
-  <ion-button size="small" (click)="onClick()" color ="warning">Click here</ion-button>
+    <!-- Using a (search) event to call onSearch function. -->
+    <ion-searchbar
+    (search)="onSearch($event)"
+    >
+    </ion-searchbar>
   </div>
 </ion-content>
