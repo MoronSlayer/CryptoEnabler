@@ -2,6 +2,8 @@
 /* eslint-disable max-len */
 import { Component, OnInit } from '@angular/core';
 
+import { Storage } from '@ionic/storage-angular';
+
 @Component({
   selector: 'app-display-assets',
   templateUrl: './display-assets.page.html',
@@ -9,7 +11,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DisplayAssetsPage implements OnInit {
 
-  constructor() {
+  walletId: string;
+
+  constructor(
+    private storage: Storage
+  ) {
   }
 
   ngOnInit() {
@@ -18,10 +24,13 @@ export class DisplayAssetsPage implements OnInit {
   }
 
   assestApiHit() {
-    const options = {method: 'GET'};
+    //Receiving the set parameter from home page.
+    this.storage.get('myWalletId').then((data) => {
+      this.walletId = data;
+      const options = {method: 'GET'};
     // method to get data from api and dsiplay repson in jsoon format
       fetch(
-        'https://api.opensea.io/api/v1/assets?owner=0x05DaE8B6A2F0AD8F6bA8287fd16e37EBa26Ef1b4&order_direction=desc&offset=0&limit=20',
+        'https://api.opensea.io/api/v1/assets?owner='+ this.walletId +'&order_direction=desc&offset=0&limit=20',
         options
         )
       .then(response => response.json())
@@ -29,6 +38,7 @@ export class DisplayAssetsPage implements OnInit {
       .then(response => this.appendData(response))
 
       .catch(err => console.error(err));
+    });
   }
 
   appendData(data) {
