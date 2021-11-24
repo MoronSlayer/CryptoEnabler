@@ -1,11 +1,47 @@
 <ion-header>
-  <ion-toolbar color="tertiary">
+  <ion-toolbar>
     <ion-title>My Assets</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
+ 
+<!-- <ion-content>
   <div>
     <div id="myData"></div>
   </div>
+</ion-content> -->
+
+<ion-content>
+  <div class ="balance padding5">
+    Portfolio Balance
+  </div>
+  <p class="padding5">
+    $106,980.76
+  </p>
+  <div>
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+              Collapsible Group Item #1
+            </button>
+          </h2>
+        </div>
+    
+        <div id="collapseOne" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body"> 
+            <ion-item>
+              <ion-avatar item-start>
+                <img src="img/thumbnail-totoro.png">
+              </ion-avatar>
+              <h2>My Neighbor Totoro</h2>
+              <p>Hayao Miyazaki • 1988</p>
+              <button ion-button clear item-end>View</button>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
+
