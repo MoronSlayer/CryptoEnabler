@@ -28,7 +28,7 @@ export class DisplayAssetsPage implements OnInit {
     this.storage.get('myWalletId').then((data) => {
       this.walletId = data;
       const options = {method: 'GET'};
-    // method to get data from api and dsiplay repson in jsoon format
+    // method to get data from api and dsiplay repson in json format
       fetch(
         'https://api.opensea.io/api/v1/assets?owner='+ this.walletId +'&order_direction=desc&offset=0&limit=20',
         options
