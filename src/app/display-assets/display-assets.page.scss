@@ -3,8 +3,27 @@
     color: gray;
 }
 .padding5{
-    padding: 0.2em;
+    padding-left: 0.2em;
+}
+.margin_zero{
+    margin: 0em;
 }
 .black{
     color: black;
+}
+.padding_below{
+    padding-bottom: 00.2em;
+}
+.right_pusher{
+    margin-left: auto; 
+    margin-right: 0;
+}
+.info{
+    font-size: small;
+    color: gray;
+    margin: 0em;
+}
+ion-avatar {
+    max-width: 25cm;
+    max-height: 25cm;
 }
