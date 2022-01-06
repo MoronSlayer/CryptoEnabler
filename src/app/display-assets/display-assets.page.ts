@@ -2,7 +2,8 @@
 /* eslint-disable max-len */
 import { Component, OnInit } from '@angular/core';
 
-import { Storage } from '@ionic/storage-angular';
+import { Storage } from '@capacitor/storage';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-display-assets',
@@ -12,9 +13,13 @@ import { Storage } from '@ionic/storage-angular';
 export class DisplayAssetsPage implements OnInit {
 
   walletId: string;
+  url;
+  openSeaApiResponse;
+  titleName;
+  avatarUrl;
 
   constructor(
-    private storage: Storage
+    private http: HttpClient
   ) {
   }
 
@@ -23,47 +28,23 @@ export class DisplayAssetsPage implements OnInit {
     this.assestApiHit();
   }
 
-  assestApiHit() {
+  async assestApiHit() {
     //Receiving the set parameter from home page.
-    this.storage.get('myWalletId').then((data) => {
-      this.walletId = data;
-      const options = {method: 'GET'};
-    // method to get data from api and dsiplay repson in jsoon format
-      fetch(
-        'https://api.opensea.io/api/v1/assets?owner='+ this.walletId +'&order_direction=desc&offset=0&limit=20',
-        options
-        )
-      .then(response => response.json())
-      .then(response => response.assets)
-      .then(response => this.appendData(response))
-
-      .catch(err => console.error(err));
+    await Storage.get({
+      key:'myWalletId'
+    }).then((data) =>{
+      this.walletId = data.value;
+      this.url = 'https://api.opensea.io/api/v1/assets?owner='+ this.walletId +'&order_direction=desc&offset=0&limit=20';
+    });
+    this.http.get(this.url).subscribe((data) => {
+      this.openSeaApiResponse = data;
+      //console.log(this.openSeaApiResponse.assets[0].collection.name);
+      this.displayPortfolio();
     });
   }
 
-  appendData(data) {
-    const mainContainer = document.getElementById('myData');
-    for (let i = 0; i < data.length; i++) {
-        const NFT_item = document.createElement('ion-list');
-        const NFT_card = document.createElement('ion-item');
-        NFT_item.appendChild(NFT_card);
-        const thumbnail = document.createElement('ion-avatar');  
-        thumbnail.setAttribute('slot','start');      
-        NFT_card.appendChild(thumbnail);
-        mainContainer.appendChild(NFT_card);
-        const img = document.createElement('img');        
-        img.setAttribute('src', data[i].image_url);
-        thumbnail.appendChild(img);
-        const NFT_content_header = document.createElement('p');
-        NFT_content_header.setAttribute('class','info');
-        const NFT_end = document.createElement('p');
-        NFT_end.setAttribute('class','info');
-        NFT_end.setAttribute('slot','end');
-        NFT_content_header.innerHTML = data[i].asset_contract.name + '\n' +'<br>' + 'NFT: ' + data[i].token_id 
-        NFT_end.appendChild(NFT_content_header);
-        NFT_card.appendChild(NFT_end);
-    }
-};
-
-
+  displayPortfolio() {
+    this.titleName = this.openSeaApiResponse.assets[0].collection.name;
+    this.avatarUrl = this.openSeaApiResponse.assets[0].collection.image_url;
+  }
 }
